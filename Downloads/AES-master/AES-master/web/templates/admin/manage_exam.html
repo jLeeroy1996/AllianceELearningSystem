@@ -1,0 +1,105 @@
+<div class="col-lg-12">
+    <!-- Manage Exams From -->
+    <h2 class="content-heading">Manage Exams</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+            <form class="js-validation-material form-horizontal push-10-t" id="add-user-form" action="" method="post">
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <div class="form-material" id="add-user-message"> 
+                            <p class="error">{{ errorMessage }}</p>
+                            <p class="p-success">{{ successMessage }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <div class="form-material">                            
+                            <select class="form-control-solid" ng-model="courseSelected" ng-change="updateExamTable()" id="course-select">
+                                <option ng-repeat="course in courses" value="{{ course.id }}">{{ course.courseTitle }}</option>
+                            </select>            
+                            <label for="course-select">Courses</label>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                                <button class="btn btn-sm btn-success" ng-click="goToAddExam()">    
+                                        <i class="fa fa-plus"></i>&nbsp;&nbsp; Add Exam</button>
+                            </div>
+                    <div class="col-lg-12">                         
+                        <div class="form-material">
+                            <table id="bu-table" class="table table-condensed table-header-bg table-striped table-hover table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div ng-click="orderByField='title'; reverseSort = !reverseSort">
+                                                Title 
+                                                <span ng-show="orderByField == 'title'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='description'; reverseSort = !reverseSort">
+                                                Description 
+                                                <span ng-show="orderByField == 'description'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th> 
+                                        <th>
+                                            <div ng-click="orderByField='course.courseTitle'; reverseSort = !reverseSort">
+                                                Course Title 
+                                                <span ng-show="orderByField == 'course.courseTitle'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>                                        
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="exam in exams|orderBy:orderByField:reverseSort">
+                                        <td>{{ exam.title }}</td>
+                                        <td>{{ exam.description }}</td>
+                                        <td>{{ exam.course.courseTitle }}</td>
+                                        <td>
+                                            <button class="btn btn-xs btn-warning" ng-click="goToEditExam(exam.id)">
+                                            <i class="fa fa-pencil"></i>&nbsp; Edit</button>
+                                            <button class="btn btn-xs btn-danger" ng-click="confirmDeleteExam(exam.id)">
+                                            <i class="fa fa-times"></i>&nbsp; Delete</button>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>    
+                            </table>
+                        </div>
+                    </div>
+                </div>                                                        
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Delete Exam Modal -->
+<div class="modal" id="confirm-delete-exam" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="deleteExam()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

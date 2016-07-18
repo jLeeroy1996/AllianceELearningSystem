@@ -1,0 +1,124 @@
+<div class="col-lg-6 add-user-form">
+    <!-- Add User From -->
+    <h2 class="content-heading">Add Business Unit</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+                <form class="js-validation-material form-horizontal push-10-t" ng-submit="confirmAddBusinessUnit()">               
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <p class="error">{{ errorMessage }}</p>
+                            <p class="p-success">{{ successMessage }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-material">
+                                <input required class="form-control" ng-model="newBu" type="text" maxlength="30" placeholder="Enter business unit...">
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-material">
+                                <button class="btn btn-sm btn-success submit" >
+                                <i class="fa fa-plus"></i>&nbsp; Add</button>
+                            </div>
+                        </div>
+                    </div>                    
+                </div> 
+                </form>
+                
+                <form class="js-validation-material form-horizontal push-10-t">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <table class="table table-condensed table-borderless">
+                                <tr ng-repeat="bu in bus">                                    
+                                    <td>
+                                        <input required type="text" size="35" id="{{bu.id}}" value="{{bu.businessUnit}}">
+                                        <button class="btn btn-xs btn-primary" ng-click="confirmUpdateBu(bu.id)">
+                                        <i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-xs btn-danger" ng-click="confirmDeleteBu(bu.id)">
+                                        <i class="fa fa-times"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>                    
+                </div>
+            </form>            
+        </div>
+    </div>
+</div>  
+
+<!-- Start Confirm Update BU Modal -->
+<div class="modal" id="confirm-update-bu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="updateBu()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Delete BU Modal -->
+<div class="modal" id="confirm-delete-bu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="deleteBu()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Add BU Modal -->
+<div class="modal" id="confirm-add-bu" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="addBusinessUnit()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

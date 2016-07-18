@@ -1,0 +1,86 @@
+<div class="col-lg-12 add-user-form">
+    <h2 class="content-heading">Add Chapter</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+            <form class="js-validation-material form-horizontal push-10-t" ng-submit="confirmAddChapter()">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material" id="add-course-message"> 
+                            <p class="error">{{errorMessage}}</p>
+                            <p class="p-success">{{successMessage}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6 text-left">
+                        Select Course: &nbsp;&nbsp;
+                        <select class="" ng-model="courseSelected" ng-change="getCourse()">                            
+                            <option ng-repeat="obj in courses" value="{{ obj.id }}">{{ obj.courseTitle }}</option>                            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material" id="add-course-message">                                                    
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input required class="form-control" type="number" min="1" max="100" id="chapter-number" ng-model="number" placeholder="Choose chapter number..">
+                            <label for="chapter-number">Number</label>
+                        </div>
+                    </div>
+                </div>                                        
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input required class="form-control" type="text" id="chapter-title" ng-model="title" placeholder="Choose a title.." maxlength="50">
+                            <label for="chapter-title">Title</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <div id="textarea-holder"><textarea ui-tinymce="tinymceOptions" ng-model="content"></textarea></div>
+                            <label for="chapter-description">Chapter Content</label>
+                        </div>
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button class="btn btn-sm btn-primary" type="submit">Add Chapter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>  
+
+<!-- Start Confirm Add Chapter Modal -->
+<div class="modal" id="confirm-add-chapter" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="addChapter()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

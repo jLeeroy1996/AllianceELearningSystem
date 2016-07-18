@@ -1,0 +1,75 @@
+<div class="col-lg-9 add-user-form">
+    <!-- Add User From -->
+    <h2 class="content-heading">Update Profile</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+            <form class="js-validation-material form-horizontal push-10-t" ng-submit="updateProfile()">
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="form-material" id="update-user-message">
+                            <p class="p-success">{{successMessage}}</p>
+                            <p class="p-error">{{errorMessage}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input class="form-control" ng-model="username" type="text" disabled>
+                            <label for="username-modal">Username</label>
+                        </div>
+                    </div>
+                </div>                                        
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input required class="form-control" type="text" required ng-model="name" minlength="2" maxlength="45">
+                            <label for="name-modal">Name</label>
+                        </div>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input required class="form-control" type="email" ng-model="email" placeholder="Enter valid email..">
+                            <label for="email-modal">Email</label>
+                        </div>
+                    </div>
+                </div>    
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input required class="form-control" type="text" ng-model="position" maxlength="45" placeholder="Enter position...">
+                            <label for="position-modal">Company Position</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <div class="form-material">
+                            <select required class="form-control-solid" ng-model="buSelected">
+                                <option ng-repeat="bu in bus" value="{{bu.id}}">{{bu.businessUnit}}</option>
+                            </select>
+                            <label for="bu-modal">Business Unit</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <div class="form-material">
+                            <select required class="form-control-solid" ng-model="typeSelected">
+                                <option ng-repeat="type in types" value="{{type.id}}">{{type.userType}}</option>
+                            </select>
+                            <label for="type-modal">User Type</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button class="btn btn-sm btn-primary add-user-fom-submit" type="submit">Update User</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>  

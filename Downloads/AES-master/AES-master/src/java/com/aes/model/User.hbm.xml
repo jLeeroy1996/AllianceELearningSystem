@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 5, 2015 8:45:52 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.aes.model.User" table="user" catalog="aes" optimistic-lock="version">
+        <id name="userName" type="string">
+            <column name="user_name" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="businessUnit" class="com.aes.model.BusinessUnit" fetch="select">
+            <column name="business_unit_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="userType" class="com.aes.model.UserType" fetch="select">
+            <column name="user_type_id" not-null="true" />
+        </many-to-one>
+        <property name="password" type="string">
+            <column name="password" length="45" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="45" not-null="true" />
+        </property>
+        <property name="position" type="string">
+            <column name="position" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" />
+        </property>
+        <property name="createdBy" type="string">
+            <column name="created_by" length="15" not-null="true" />
+        </property>
+        <property name="dateCreated" type="timestamp">
+            <column name="date_created" length="19" not-null="true" />
+        </property>
+        <property name="editedBy" type="string">
+            <column name="edited_by" length="15" not-null="true" />
+        </property>
+        <property name="dateEdited" type="timestamp">
+            <column name="date_edited" length="19" not-null="true" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" not-null="true" />
+        </property>
+        <set name="examScoreses" table="exam_scores" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user" length="15" not-null="true" />
+            </key>
+            <one-to-many class="com.aes.model.ExamScores" />
+        </set>
+        <set name="coursesTakens" table="courses_taken" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user" length="15" not-null="true" />
+            </key>
+            <one-to-many class="com.aes.model.CoursesTaken" />
+        </set>
+        <set name="courses" table="course" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="trainer" length="15" not-null="true" />
+            </key>
+            <one-to-many class="com.aes.model.Course" />
+        </set>
+    </class>
+</hibernate-mapping>

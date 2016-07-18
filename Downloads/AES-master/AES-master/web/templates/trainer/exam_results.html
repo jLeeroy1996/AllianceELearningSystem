@@ -1,0 +1,131 @@
+<div class="col-lg-12">
+    <!-- Manage Exams From -->
+    <h2 class="content-heading">Exam Results</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+            <form class="js-validation-material form-horizontal push-10-t" id="add-user-form" action="" method="post">
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <div class="form-material" id="add-user-message"> 
+                            <p class="error">{{ errorMessage }}</p>
+                            <p class="p-success">{{ successMessage }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        <div class="form-material form-material-primary input-group remove-margin-t pull-right remove-margin-b">
+                            <input class="form-control pull-right" type="text" id="search-user-name" ng-model="searchName" ng-change="searchUser()" placeholder="Search trainee..">
+                            <span class="input-group-addon"><i class="si si-magnifier"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="form-material" id="add-user-message"> 
+                            Courses:
+                            <select class="form-control-solid" ng-model="courseSelected" ng-change="updateExams()">
+                                <option ng-repeat="course in courses" value="{{ course.id }}">{{ course.courseTitle }}</option>
+                            </select>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            Exam:
+                            <select class="form-control-solid" ng-model="examSelected" ng-change="updateScoresTable()">
+                                <option ng-repeat="exam in exams" value="{{ exam.id }}">{{ exam.title }}</option>
+                            </select>                         
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-material">
+                            <table id="bu-table" class="table table-condensed table-header-bg table-striped table-hover table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            <div ng-click="orderByField='user.name'; reverseSort = !reverseSort">
+                                                Username 
+                                                <span ng-show="orderByField == 'user.name'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">Course Title</th>
+                                        <th class="text-center">
+                                            <div ng-click="orderByField='exam.title'; reverseSort = !reverseSort">
+                                                Exam Title 
+                                                <span ng-show="orderByField == 'exam.title'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div ng-click="orderByField='score'; reverseSort = !reverseSort">
+                                                Score 
+                                                <span ng-show="orderByField == 'score'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div ng-click="orderByField='maxScore'; reverseSort = !reverseSort">
+                                                Max Score 
+                                                <span ng-show="orderByField == 'maxScore'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div ng-click="orderByField='timesTaken'; reverseSort = !reverseSort">
+                                                Tries
+                                                <span ng-show="orderByField == 'timesTaken'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="score in scores|orderBy:orderByField:reverseSort" >
+                                        <td>{{ score.user.name }}</td>
+                                        <td class="text-center">{{ score.exam.course.courseTitle }}</td>
+                                        <td class="text-center">{{ score.exam.title }}</td>
+                                        <td class="text-center">{{ score.score }}</td>
+                                        <td class="text-center">{{ score.maxScore }}</td>
+                                        <td class="text-center">{{ score.timesTaken }}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-xs btn-danger" ng-click="confirmDeleteScore(score.id)">
+                                            <i class="fa fa-times"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>    
+                            </table>
+                        </div>
+                    </div>
+                </div>                                                        
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Delete Score Modal -->
+<div class="modal" id="confirm-delete-score" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="deleteScore()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

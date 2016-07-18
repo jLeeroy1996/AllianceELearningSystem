@@ -1,0 +1,95 @@
+                <!-- Start Assign Trainees Table -->
+                <div class="content bg-white border-b">
+                    <br/>
+                    <div class="col-sm-12">
+                        <div class="form-material" id="add-course-message"> 
+                            <p class="error">{{errorMessage}}</p>
+                            <p class="p-success">{{successMessage}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-material form-material-primary input-group">
+                            <input class="form-control" ng-change="searchTrainees()" type="text" ng-model="searchName" placeholder="Search trainee here..">
+                            <span class="input-group-addon"><i class="si si-magnifier"></i></span>
+                        </div>   
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-material pull-left">
+                            <select class="form-control-solid" ng-model="courseSelected" ng-change="updateTrainees()">
+                                <option ng-repeat="course in courses" value="{{ course.id }}">{{ course.courseTitle }}</option>
+                            </select>
+                        </div>   
+                    </div>
+                    <table id="unassigned-trainees-table" class="table table-condensed table-header-bg table-striped table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="text-center"><input type="checkbox" id="selectAllUnassigned" ng-click="selectAllUnassigned()" /></th>
+                                <th>
+                                    <div ng-click="orderByField='name'; reverseSort = !reverseSort">
+                                        Name
+                                        <span ng-show="orderByField == 'name'">
+                                        <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                        <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div ng-click="orderByField='userName'; reverseSort = !reverseSort">
+                                        Username
+                                        <span ng-show="orderByField == 'userName'">
+                                        <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                        <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                    </div>
+                                </th>
+                                <th class="text-center">
+                                    <div ng-click="orderByField='businessUnit.businessUnit'; reverseSort = !reverseSort">
+                                        B. Unit
+                                        <span ng-show="orderByField == 'businessUnit.businessUnit'">
+                                        <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                        <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+                            <tr ng-repeat="trainee in trainees|orderBy:orderByField:reverseSort">
+                                <td class="text-center"><input class="trainee" type="checkbox" value="{{ trainee.userName }}"/></td>
+                                <td>{{ trainee.name }}</td>
+                                <td >{{ trainee.userName }}</td>
+                                <td class="text-center">{{ trainee.businessUnit.businessUnit }}</td>
+                            </tr>
+                            <tr><td></td><td></td><td></td><td></td></tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td class="text-center"><button id="assign-trainees-btn" class="btn btn-danger btn-sm" ng-click="confirmAssignTrainees()">Assign Trainees</button></td>                                		
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>  
+                    <!-- End Table for Trainees -->
+                <!-- End Assign Trainees Table -->       
+                
+<!-- Start Confirm Assign Trainees Modal -->
+<div class="modal" id="confirm-assign-trainees" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="assignTrainees()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>                

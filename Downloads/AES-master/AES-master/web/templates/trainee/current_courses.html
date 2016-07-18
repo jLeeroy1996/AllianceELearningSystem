@@ -1,0 +1,39 @@
+<h3 class="page-title">Current Courses</h3>
+<div class="panel-group accordion" id="#accordion1">
+    <div class="panel panel-default" ng-repeat="course in currentCourses">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" ng-click="showAccordion('#collapse' + $index)" aria-expanded="false">
+            {{ course.courseTitle }}</a>
+            </h4>
+        </div>
+        <div id="collapse{{$index}}" class="panel-collapse collapse" aria-expanded="false">
+            <div class="panel-body">
+                <br/>
+                <h4>Description</h4>
+                <p>{{ course.description }}</p><br/>
+                <div class="tabbable tabbable-tabdrop">
+                    <ul class="nav nav-pills">
+                        <li ng-class="{active: $index == activeChapter}" ng-repeat="chapter in course.chapters">
+                            <a data-toggle="tab" ng-click="showChapter($index)" aria-expanded="true">Chapter {{ $index + 1 }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" ng-class="{active: $index == activeChapter}" ng-repeat="chapter in course.chapters" id="tab{{$index}}">
+                            <br/><br/>
+                            <h3>{{ chapter.title }}</h3>
+                            <br/>
+                            <br/>
+                            <b>Study Materials</b>
+                            <ul>
+                                <li ng-repeat="presentation in chapter.presentations"><a href="download?file={{presentation.location}}&name={{presentation.name}}">{{ presentation.name }}</a></li>
+                            </ul>
+                            <br/><br/>
+                            <p ng-bind-html="trustAsHtml(chapter.content)"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

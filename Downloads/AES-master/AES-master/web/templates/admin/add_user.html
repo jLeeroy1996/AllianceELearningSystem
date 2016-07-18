@@ -1,0 +1,100 @@
+<div class="col-lg-9 add-user-form">
+    <!-- Add User From -->
+    <h2 class="content-heading">Add User</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+            <form class="js-validation-material form-horizontal push-10-t" ng-submit="confirmAddUser()" action="" method="post">
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="form-material" id="add-user-message">   
+                            <p class="error">{{errorMessage}}</p>
+                            <p class="p-success">{{successMessage}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="form-material">
+                            <input class="form-control" placeholder="Choose a username.." ng-model="username" required minlength="5" maxlength="15">
+                            <label for="add-username">Username (5-15 Letters)</label>
+                        </div>
+                    </div>
+                </div>                                        
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="form-material">
+                            <input class="form-control" placeholder="Enter trainee's name.." ng-model="name" required minlength="5" maxlength="45">
+                            <label for="add-email">Name</label>
+                        </div>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="form-material">
+                            <input class="form-control" type="email"  ng-model="email" required minlength="5" maxlength="45" placeholder="Enter valid email..">
+                            <label for="add-email">Email</label>
+                        </div>
+                    </div>
+                </div>    
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="form-material">
+                            <input class="form-control" ng-model="position" required minlength="5" maxlength="45" placeholder="Enter position...">
+                            <label for="add-email">Company Position</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            <select class="form-control-solid" id="business-unit-select" ng-model="buSelected" name="business_unit_id" required>
+                                <option ng-repeat="bu in bus" value="{{bu.id}}">{{bu.businessUnit}}</option>
+                            </select>
+                            <label for="business-unit-select">Business Unit</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="form-material">
+                            <select class="form-control-solid" id="user-type-select" ng-model="typeSelected" name="user_type" required>
+                                <option ng-repeat="type in types" value="{{type.id}}">{{type.userType}}</option>
+                            </select>
+                            <label for="user-select">User Type</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button class="btn btn-sm btn-primary add-user-fom-submit" type="submit">Add User</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>  
+
+<div class="modal" id="confirm-add-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="addUser()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

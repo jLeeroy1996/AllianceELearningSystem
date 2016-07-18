@@ -1,0 +1,386 @@
+                <!-- Start Manage User Table -->
+                <div class="content bg-white border-b">
+                    <br/>
+                    
+                    <!-- error or success messages -->
+                    <div class="row col-sm-12">
+                        <div class="form-material" id="manage-user-message">                            
+                        </div>
+                    </div>
+                    
+                    <!-- Start Table for Records -->
+                        <div class="block-content">
+                            <div class="row col-sm-12">
+                                <p class="error">{{errorMessage}}</p>
+                                <p class="p-success">{{successMessage}}</p>
+                            </div>
+                            <div class="nav-header pull-left">
+                                <div class="js-header-search header-search">
+                                        <div class="form-material form-material-primary input-group">
+                                            <input class="form-control" ng-change="searchUser()" type="text" ng-model="searchName" placeholder="Search user here..">
+                                            <span class="input-group-addon"><i class="si si-magnifier"></i></span>
+                                        </div>    
+                                </div>
+                            </div>
+                            <table id="users-table" class="table table-condensed table-header-bg table-striped table-hover table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div ng-click="orderByField='name'; reverseSort = !reverseSort">
+                                                Name
+                                                <span ng-show="orderByField == 'name'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='userName'; reverseSort = !reverseSort">
+                                                Username
+                                                <span ng-show="orderByField == 'userName'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='position'; reverseSort = !reverseSort">
+                                                Position
+                                                <span ng-show="orderByField == 'position'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='businessUnit.businessUnit'; reverseSort = !reverseSort">
+                                                B. Unit 
+                                                <span ng-show="orderByField == 'businessUnit.businessUnit'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='userType.userType'; reverseSort = !reverseSort">
+                                                Type
+                                                <span ng-show="orderByField == 'userType.userType'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>                                        
+                                        <th>
+                                            <div ng-click="orderByField='email'; reverseSort = !reverseSort">
+                                                Email
+                                                <span ng-show="orderByField == 'email'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="user in users|orderBy:orderByField:reverseSort">
+                                        <td>{{user.name}}</td>
+                                        <td>{{user.userName}}</td>
+                                        <td>{{user.position}}</td>
+                                        <td>{{user.businessUnit.businessUnit}}</td>
+                                        <td>{{user.userType.userType}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-xs btn-success" title="Assign Course" ng-click="viewAssignCourseModal(user.userName)">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+                    <!-- End Table for Records -->
+                </div>
+                <!-- End Manage User Table -->
+                <!-- Start Update User Profile Modal -->
+                <div id="update-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">	                    
+                    <div class="modal-dialog modal-dialog-popin">
+                        <div class="modal-content">
+                            <div class="block block-themed block-transparent remove-margin-b">
+                                <div class="block-header bg-primary-dark">
+                                    <ul class="block-options">
+                                        <li>
+                                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                        </li>
+                                    </ul>
+                                    <h3 class="block-title">Update Profile</h3>
+                                </div>
+                                <div class="block-content">
+                                    <form class="js-validation-material form-horizontal push-10-t" ng-submit="confirmUpdateUser()">
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <div class="form-material" id="update-user-message">                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material">
+                                                    <input class="form-control" ng-model="username" type="text" disabled>
+                                                    <label for="username-modal">Username</label>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material">
+                                                    <input required class="form-control" type="text" required ng-model="name" minlength="2" maxlength="45">
+                                                    <label for="name-modal">Name</label>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material">
+                                                    <input required class="form-control" type="email" ng-model="email" placeholder="Enter valid email..">
+                                                    <label for="email-modal">Email</label>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material">
+                                                    <input required class="form-control" type="text" ng-model="position" maxlength="45" placeholder="Enter position...">
+                                                    <label for="position-modal">Company Position</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="form-material">
+                                                    <select required class="form-control-solid" ng-model="buSelected">
+                                                        <option ng-repeat="bu in bus" value="{{bu.id}}">{{bu.businessUnit}}</option>
+                                                    </select>
+                                                    <label for="bu-modal">Business Unit</label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="form-group">
+                                            <div class="col-sm-8">
+                                                <div class="form-material">
+                                                    <select required class="form-control-solid" ng-model="typeSelected">
+                                                        <option ng-repeat="type in types" value="{{type.id}}">{{type.userType}}</option>
+                                                    </select>
+                                                    <label for="type-modal">User Type</label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <button class="btn btn-sm btn-primary add-user-fom-submit" type="submit">Update User</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>                
+                <!-- End Update User Profile Modal -->
+                
+                <!-- Start Assign Course Modal -->
+                <div id="assign-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">	                    
+                    <div class="modal-dialog modal-dialog-popin">
+                        <div class="modal-content">
+                            <div class="block block-themed block-transparent remove-margin-b">
+                                <div class="block-header bg-primary-dark">
+                                    <ul class="block-options">
+                                        <li>
+                                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                        </li>
+                                    </ul>
+                                    <h3 class="block-title">Assign Course</h3>
+                                </div>
+                                <div class="block-content">
+                                    <form class="js-validation-material form-horizontal push-10-t" method="post">
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <div class="form-material" id="assign-course-message">  
+                                                    <p class="error">{{ modalErrorMessage }}</p>
+                                                    <p class="p-success">{{ modalSuccessMessage }}</p>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <div class="form-material">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">                                                                                                           
+                                                            <select required class="form-control-solid" ng-model="courseSelected">
+                                                                <option ng-repeat="course in courses" value="{{course.id}}">{{course.courseTitle}}</option>
+                                                            </select>                                                                                                            
+                                                        </div>
+                                                            <button class="btn btn-sm btn-success" ng-click="confirmAssignCourse()" type="button">Assign Course</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <div class="form-material">   
+                                                    <table id="courses-table" class="table table-condensed table-striped table-hover table-borderless">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Courses</th>                                                                
+                                                                <th>Status</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>            
+                                                            <tr ng-repeat="taken in takens">
+                                                                <td>{{ taken.course.courseTitle }}</td>
+                                                                <td>{{ isFinished(taken.active) }}</td>
+                                                                <td>                                                                    
+                                                                    <button class="btn btn-xs btn-danger" title="Unassign Course" ng-click="confirmUnassignCourse(taken.id)">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>                                             
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>                
+                <!-- End Assign Course Modal -->
+                
+                
+<!-- Start Confirm Delete User Modal -->
+<div class="modal" id="confirm-delete-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="deleteUser()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>   
+
+<!-- Start Confirm Reset Password Modal -->
+<div class="modal" id="confirm-reset-pw" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="resetPassword()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Update User Modal -->
+<div class="modal" id="confirm-update-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="updateUser()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" ng-click="showUpdateUserModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Assign Course Modal -->
+<div class="modal" id="confirm-assign-course" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="assignCourse()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" ng-click="cancelAssignCourse()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Confirm Unassign Course Modal -->
+<div class="modal" id="confirm-unassign-course" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="unassignCourse()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" ng-click="cancelUnassignCourse()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

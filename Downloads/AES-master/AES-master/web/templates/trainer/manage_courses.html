@@ -1,0 +1,207 @@
+                <!-- Start Manage Courses Table -->
+                <div class="content bg-white border-b">
+                    <br/>
+                    <div class="col-sm-12">
+                        <div class="form-material" id="add-course-message"> 
+                            <p class="error">{{errorMessage}}</p>
+                            <p class="p-success">{{successMessage}}</p>
+                        </div>
+                    </div>
+                    <!-- Start Table for Courses -->
+                        <div class="block-content">
+                            <div class="nav-header pull-left">
+                                <div class="js-header-search header-search">
+                                    <div class="form-material form-material-primary input-group">
+                                        <input class="form-control" ng-change="searchCourses()" type="text" ng-model="searchName" placeholder="Search course here..">
+                                        <span class="input-group-addon">
+                                            <i class="si si-magnifier"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn btn-sm btn-success" ng-click="goToAddCourse()">    
+                                        <i class="fa fa-plus"></i>&nbsp;&nbsp; Add Course</button>
+                            </div>
+                            <table id="courses-table" class="table table-condensed table-header-bg table-striped table-hover table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div ng-click="orderByField='courseTitle'; reverseSort = !reverseSort">
+                                                Title 
+                                                <span ng-show="orderByField == 'courseTitle'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>    
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='courseCategory.category'; reverseSort = !reverseSort">
+                                                Category 
+                                                <span ng-show="orderByField == 'courseCategory.category'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>                                                                                
+                                        <th>
+                                            <div ng-click="orderByField='dateEdited'; reverseSort = !reverseSort">
+                                                Edited
+                                                <span ng-show="orderByField == 'dateEdited'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='dateCreated'; reverseSort = !reverseSort">
+                                                Created
+                                                <span ng-show="orderByField == 'dateCreated'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div ng-click="orderByField='user.name'; reverseSort = !reverseSort">
+                                                Trainer
+                                                <span ng-show="orderByField == 'user.name'">
+                                                <span ng-show="!reverseSort">&nbsp;<i class="fa fa-angle-up"></i></span>
+                                                <span ng-show="reverseSort">&nbsp;<i class="fa fa-angle-down"></i></span></span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>  
+                                    <tr ng-repeat="course in courses|orderBy:orderByField:reverseSort">
+                                        <td>{{ course.courseTitle }}</td>
+                                        <td>{{ course.courseCategory.category }}</td>              
+                                        <td>{{ course.dateEdited | date:'MM/dd/yyyy h:mma' }}</td>
+                                        <td>{{ course.dateCreated | date:'MM/dd/yyyy h:mma' }}</td>                                        
+                                        <td>{{ course.user.name }}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-xs btn-warning" ng-click="showUpdateModal(course.id)" title="Update Course"><i class="fa fa-pencil"></i></button> 
+                                            <button class="btn btn-xs btn-info" ng-click="viewCourse(course.id)" title="View Couse Details"><i class="fa fa-search"></i></button> 
+                                            <button class="btn btn-xs btn-danger" ng-click="confirmDeleteCourse(course.id)" title="Delete Course"><i class="fa fa-times"></i></button>                                                                                            
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>                            
+                        </div>  
+                    <!-- End Table for Courses -->
+                </div>
+                <!-- End Manage Course Table -->
+
+                <!-- Start Update Course Modal -->
+                <div id="update-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">	                    
+                    <div class="modal-dialog modal-lg modal-dialog-popin">
+                        <div class="modal-content">
+                            <div class="block block-themed block-transparent remove-margin-b">
+                                <div class="block-header bg-primary-dark">
+                                    <ul class="block-options">
+                                        <li>
+                                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                        </li>
+                                    </ul>
+                                    <h3 class="block-title">Update Course</h3>
+                                </div>
+                                <div class="block-content">
+                                    <form class="js-validation-material form-horizontal push-10-t" ng-submit="confirmUpdateCourse()">
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <div class="form-material">
+                                                    <input required class="form-control" type="text" id="update-course-title" ng-model="title" placeholder="Choose a title.." maxlength="50">
+                                                    <label for="add-course-title">Title</label>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <div class="form-material">
+                                                    <select required class="form-control-solid" id="course-category-select-modal" ng-model="categorySelected">
+                                                        <option ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</option>
+                                                    </select>
+                                                    <label for="course-category-select">Course Category</label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material">
+                                                    <textarea required class="form-control" rows="5" id="add-course-description-modal" ng-model="description" placeholder="Enter description.."></textarea>
+                                                    <label for="add-course-description">Description</label>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material">
+                                                    <select required class="form-control-solid" id="trainer-select-modal" ng-model="trainerSelected">
+                                                        <option ng-repeat="trainer in trainers" value="{{trainer.userName}}">{{trainer.name}}</option>
+                                                    </select>
+                                                    <label for="trainer-select">Choose a Trainer</label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <button class="btn btn-sm btn-primary" type="submit">Update Course</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>                
+                <!-- End Update User Profile Modal -->
+
+<!-- Start Confirm Update Course Modal -->
+<div class="modal" id="confirm-update-course" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="updateCourse()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" ng-click="showUpdateCourseModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>  
+
+<!-- Start Confirm Delete Course Modal -->
+<div class="modal" id="confirm-delete-course" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="deleteCourse()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div> 

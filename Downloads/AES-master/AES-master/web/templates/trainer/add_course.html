@@ -1,0 +1,83 @@
+<div class="col-lg-12 add-user-form">
+    <!-- Add Course From -->
+    <h2 class="content-heading">Add Course Form</h2>
+    <div class="block">
+        <div class="block-content block-content-narrow">
+            <form class="js-validation-material form-horizontal push-10-t" ng-submit="confirmAddCourse()">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material" id="add-course-message"> 
+                            <p class="error">{{errorMessage}}</p>
+                            <p class="p-success">{{successMessage}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <input required class="form-control" type="text" ng-model="title" placeholder="Choose a title.." maxlength="30">
+                            <label for="add-course-title">Title</label>
+                        </div>
+                    </div>
+                </div>                                        
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <div class="form-material">
+                            <select required class="form-control-solid" ng-model="categorySelected">                                  
+                                <option id="course-category-select" ng-repeat="category in categories" value="{{category.id}}">{{category.category}}</option>
+                            </select>
+                            <label for="course-category-select">Course Category</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-material">
+                            <textarea required class="form-control" id="add-course-description" rows="5" name="email"ng-model="description" placeholder="Enter description.."></textarea>
+                            <label for="add-course-description">Description</label>
+                        </div>
+                    </div>
+                </div>                                    
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <div class="form-material">
+                            <select required class="form-control-solid" id="trainer-select" ng-model="trainerSelected">
+                                <option ng-repeat="trainer in trainers" value="{{trainer.userName}}">{{trainer.name}}</option>
+                            </select>
+                            <label for="trainer-select">Choose a Trainer</label>
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-xs-8">
+                        <button class="btn btn-sm btn-primary" type="submit">Add Course</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
+<!-- Start Confirm Add Course Modal -->
+<div class="modal" id="confirm-add-course" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Confirmation</h3>
+                </div>
+                <div class="block-content">
+                    <p>Are you sure?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-success" type="button" ng-click="addCourse()">Submit</button>
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
